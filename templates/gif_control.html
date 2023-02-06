@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- The FreezeFrame library in CDN format -->
+    <script src="https://unpkg.com/freezeframe/dist/freezeframe.min.js"></script>
+  </head>
+  <body>
+    <h1>Make a gif controllable</h1>
+
+    <div>
+    
+      <p>#1. A GIF with play/pause toggled by clicking on it.</p>
+      <img id="my_gif" src="/static/dance.gif" width="400" />
+
+      <p>#2. A GIF with play/pause toggled by clicking a button.</p>
+      <img id="my_gif_2" src="/static/dance.gif" width="400" />
+      <br>
+      <input type="button" id="my_toggle_button" value="toggle">
+
+      <p>#3. A video that looks/acts like a GIF.</p>
+      <video autoplay loop muted playsinline  width="400" >
+        <source src="/static/dance.mp4" type="video/mp4">
+      </video>
+
+      <p>#4. A normal video that is controllable.</p>
+      <video controls width="400">
+        <source src="/static/dance.mp4" type="video/mp4" />
+        <p>
+          Your browser doesn't support HTML video. Here is a
+          <a href="/static/dance.mp4">link to the video</a> instead.
+        </p>
+      </video>
+
+      <p>#5. A video that is controllable and looks/acts like a GIF. (my favorite option)</p>
+      <video controls autoplay loop muted playsinline width="400">
+        <source src="/static/dance.mp4" type="video/mp4" />
+        <p>
+          Your browser doesn't support HTML video. Here is a
+          <a href="/static/dance.mp4">link to the video</a> instead.
+        </p>
+      </video>
+
+      <p>#6. A video-like GIF with custom controls.</p>
+      <video id="custom-video" autoplay loop muted playsinline width="400">
+        <source src="/static/dance.mp4" type="video/mp4" />
+        <p>
+          Your browser doesn't support HTML video. Here is a
+          <a href="/static/dance.mp4">link to the video</a> instead.
+        </p>
+      </video>
+      <br>
+      <input type="button" id="play-video" value="Play">
+      <input type="button" id="pause-video" value="Pause">
+      <label for="play-speed">Play speed</label>
+      <select name="play-speed" id="play-speed-dropdown">
+        <option value="0.25">0.25X</option>
+        <option value="0.5">0.5X</option>
+        <option value="1" selected>1X</option>
+        <option value="1.5">1.5X</option>
+        <option value="2">2X</option>
+      </select>
+
+    </div>
+
+    <script>
+
+      // Freezeframe JavaScript
+      var my_gif_freezer = new Freezeframe({
+        selector: '#my_gif',
+        trigger: 'click',
+        overlay: true,
+        responsive: false,
+      });
+      var my_gif_freezer = new Freezeframe({
+        selector: '#my_gif_2',
+        trigger: false,
+        overlay: false,
+        responsive: false
+      });
+      const my_button = document.getElementById("my_toggle_button")
+      my_button.addEventListener("click", () =>{
+        my_gif_freezer.toggle()
+      })
+      
+      // Video controls
+      const custom_video = document.getElementById("custom-video")
+      const play_video_button = document.getElementById("play-video")
+      play_video_button.addEventListener("click", () =>{
+        custom_video.play()
+      })
+      const pause_video_button = document.getElementById("pause-video")
+      pause_video_button.addEventListener("click", () =>{
+        custom_video.pause()
+      })
+      const play_speed_dropdown = document.getElementById("play-speed-dropdown")
+      play_speed_dropdown.addEventListener("change", (event) =>{
+        custom_video.playbackRate = event.target.value
+      })
+
+    </script>
+  </body>
+</html>
